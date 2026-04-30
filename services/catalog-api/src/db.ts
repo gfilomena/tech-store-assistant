@@ -1,10 +1,18 @@
 import { mkdirSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
-import BetterSqlite3 from "better-sqlite3";
+import type { Database } from "better-sqlite3";
 
-export type CatalogSqliteDb = InstanceType<typeof BetterSqlite3>;
+const require = createRequire(import.meta.url);
+
+export type CatalogSqliteDb = Database;
 
 let db: CatalogSqliteDb | null = null;
+
+/** Lazy-load native module so Vercel memory-mode never touches `better-sqlite3`. */
+function sqliteDatabaseCtor(): new (path: string) => Database {
+  return require("better-sqlite3") as new (path: string) => Database;
+}
 
 function defaultDbPath(): string {
   const rel = process.env.CATALOG_DB_PATH?.trim();
@@ -18,6 +26,7 @@ function defaultDbPath(): string {
 
 export function getDb(): CatalogSqliteDb {
   if (db) return db;
+  const BetterSqlite3 = sqliteDatabaseCtor();
   const path = defaultDbPath();
   mkdirSync(dirname(path), { recursive: true });
   db = new BetterSqlite3(path);

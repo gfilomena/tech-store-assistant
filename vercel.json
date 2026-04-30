@@ -6,7 +6,8 @@
     },
     "catalog-api": {
       "entrypoint": "services/catalog-api",
-      "routePrefix": "/_/catalog-api"
+      "routePrefix": "/_/catalog-api",
+      "includeFiles": ["data/catalog.generated.5000.json"]
     }
   }
 }

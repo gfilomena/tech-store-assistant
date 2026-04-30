@@ -1,4 +1,5 @@
 import type { Catalog, Product, ProductCategory } from "../../../src/domain/product.js";
+import * as memory from "./catalogStoreMemory.js";
 import { getDb } from "./db.js";
 import { getInventoryQuantities } from "./inventoryRedis.js";
 import { seedProductsFromMock } from "./seed.js";
@@ -26,12 +27,22 @@ type ProductRow = {
 
 let initialized = false;
 
+/** Vercel serverless cannot load `better-sqlite3` reliably; use in-memory catalog from JSON. */
+function useMemoryCatalog(): boolean {
+  return Boolean(process.env.VERCEL);
+}
+
 /**
  * Opens SQLite, ensures schema, and seeds from the catalog JSON when the DB is empty
  * (or when `CATALOG_FORCE_RESEED=1`). Call once before handling traffic.
  */
 export function initCatalogDb(): void {
   if (initialized) return;
+  if (useMemoryCatalog()) {
+    memory.initMemoryCatalog();
+    initialized = true;
+    return;
+  }
   const database = getDb();
   const row = database.prepare("SELECT COUNT(*) AS c FROM products").get() as { c: number };
   const force = process.env.CATALOG_FORCE_RESEED?.trim() === "1";
@@ -65,11 +76,20 @@ function rowToProduct(row: ProductRow): Product {
 }
 
 export function getProductCount(): number {
+  if (useMemoryCatalog()) return memory.getProductCount();
   const row = getDb().prepare("SELECT COUNT(*) AS c FROM products").get() as { c: number };
   return row.c;
 }
 
+export function listAllProductIds(): string[] {
+  if (useMemoryCatalog()) return memory.listProductIdsSorted();
+  return (
+    getDb().prepare("SELECT id FROM products ORDER BY id").all() as Array<{ id: string }>
+  ).map((r) => r.id);
+}
+
 export async function loadCatalog(): Promise<Catalog> {
+  if (useMemoryCatalog()) return memory.loadCatalog();
   const rows = getDb().prepare("SELECT * FROM products ORDER BY id").all() as ProductRow[];
   const products = rows.map(rowToProduct);
   const ids = products.map((p) => p.id);
@@ -87,6 +107,7 @@ export async function loadCatalog(): Promise<Catalog> {
 }
 
 export function listCategories(): ProductCategory[] {
+  if (useMemoryCatalog()) return memory.listCategories();
   const rows = getDb()
     .prepare("SELECT DISTINCT category FROM products ORDER BY category COLLATE NOCASE")
     .all() as Array<{ category: string }>;
@@ -103,6 +124,7 @@ export type ListProductsFilters = {
 };
 
 export async function listProducts(filters: ListProductsFilters): Promise<Product[]> {
+  if (useMemoryCatalog()) return memory.listProducts(filters);
   const cat = filters.category?.trim().toLowerCase();
   if (cat && !CATEGORIES.has(cat)) return [];
 
@@ -157,6 +179,7 @@ export async function listProducts(filters: ListProductsFilters): Promise<Produc
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
+  if (useMemoryCatalog()) return memory.getProductById(id);
   const row = getDb().prepare("SELECT * FROM products WHERE id = ?").get(id) as
     | ProductRow
     | undefined;

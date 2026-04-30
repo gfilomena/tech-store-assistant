@@ -6,20 +6,16 @@ import {
   getProductById,
   getProductCount,
   initCatalogDb,
+  listAllProductIds,
   listCategories,
   listProducts,
   loadCatalog,
 } from "./catalogStore.js";
-import { getDb } from "./db.js";
 import { inventoryRedisHealth, seedInventoryIfConfigured } from "./inventoryRedis.js";
 
 initCatalogDb();
 try {
-  await seedInventoryIfConfigured(
-    (getDb().prepare("SELECT id FROM products ORDER BY id").all() as Array<{ id: string }>).map(
-      (r) => r.id,
-    ),
-  );
+  await seedInventoryIfConfigured(listAllProductIds());
 } catch (e) {
   console.warn(
     "[catalog-api][redis] Startup inventory seed threw (continuing):",
