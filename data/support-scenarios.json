@@ -1,0 +1,260 @@
+{
+  "scenarios": [
+    {
+      "id": "pre-compare-tv-gaming",
+      "phase": "pre_purchase",
+      "category": "tv",
+      "title": "Choosing a TV for PS5 / Xbox (4K 120Hz, VRR, HDMI 2.1)",
+      "user_utterances": [
+        "I need a TV for PS5: 4K 120Hz and VRR. Which one should I get?",
+        "Between a 55 and a 65 inch model, which one has HDMI 2.1?",
+        "Does the Aurora Vision support 120Hz on consoles?"
+      ],
+      "must_ask_if_missing": [
+        "What screen size do you want (55\" or 65\"), and what is your viewing distance?",
+        "Is this mostly for gaming or for movies/TV shows?"
+      ],
+      "success_criteria": [
+        "Recommends a model that exists in the catalog with HDMI 2.1/VRR when requested",
+        "Does not invent features not present in the context"
+      ]
+    },
+    {
+      "id": "pre-tv-wall-mount",
+      "phase": "pre_purchase",
+      "category": "tv",
+      "title": "Wall mounting and VESA compatibility",
+      "user_utterances": [
+        "I want to wall-mount the TV: what VESA mount does it use?",
+        "Which wall mount do I need for the Aurora 55?"
+      ],
+      "must_ask_if_missing": [
+        "Do you already have a wall mount? If yes, what VESA size does it support?"
+      ],
+      "success_criteria": [
+        "States the VESA standard from the product info when available",
+        "Avoids suggesting sizes not present in the catalog"
+      ]
+    },
+    {
+      "id": "pre-phone-esim",
+      "phase": "pre_purchase",
+      "category": "smartphone",
+      "title": "eSIM, dual SIM, and carrier compatibility",
+      "user_utterances": [
+        "Does this phone support eSIM?",
+        "Can I use two numbers on the PulsePhone X1?"
+      ],
+      "must_ask_if_missing": [
+        "Do you need two SIMs active at the same time, or just to switch between them?"
+      ],
+      "success_criteria": [
+        "Answers with the exact eSIM/nano-SIM detail present in the context"
+      ]
+    },
+    {
+      "id": "pre-phone-waterproof",
+      "phase": "pre_purchase",
+      "category": "smartphone",
+      "title": "Water resistance (IP rating)",
+      "user_utterances": [
+        "Is it water resistant? Can I use it in the rain?",
+        "Is the PulsePhone X1 IP68?"
+      ],
+      "must_ask_if_missing": [
+        "Do you need protection for rain/splashes, or for brief submersion too?"
+      ],
+      "success_criteria": [
+        "If IP68 is present, states it without over-generalizing beyond the context"
+      ]
+    },
+    {
+      "id": "pre-laptop-upgrade-ram",
+      "phase": "pre_purchase",
+      "category": "laptop",
+      "title": "RAM/SSD upgradability and choosing a configuration",
+      "user_utterances": [
+        "Is the RAM upgradable on the ZenBook Air 14?",
+        "Can I add a second SSD to the ForgeNote 15?"
+      ],
+      "must_ask_if_missing": [
+        "What will you use it for (study, work, gaming, editing), and how much memory do you need?"
+      ],
+      "success_criteria": [
+        "Correctly reports: soldered RAM vs upgradable, and the extra M.2 slot when present"
+      ]
+    },
+    {
+      "id": "pre-audio-tv-connection",
+      "phase": "pre_purchase",
+      "category": "audio",
+      "title": "Connecting a soundbar to a TV (eARC vs optical)",
+      "user_utterances": [
+        "How do I connect it to my TV? Do I need eARC?",
+        "Is HDMI or optical better for the WaveBar?"
+      ],
+      "must_ask_if_missing": [
+        "Does your TV support HDMI eARC? (it’s usually listed in the TV specs)"
+      ],
+      "success_criteria": [
+        "Recommends HDMI eARC as the preferred option when available, otherwise optical"
+      ]
+    },
+    {
+      "id": "pre-returns-warranty-general",
+      "phase": "pre_purchase",
+      "category": "general",
+      "title": "Returns and warranty (when not in the catalog)",
+      "user_utterances": [
+        "How long is the warranty?",
+        "Can I return it if I don’t like it?"
+      ],
+      "must_ask_if_missing": [
+        "Do you need info about statutory warranty or an optional extended warranty?",
+        "Have you already purchased it, or are you still deciding?"
+      ],
+      "success_criteria": [
+        "If the catalog does not contain returns/warranty policies, says they are not available in the catalog and asks what the user needs"
+      ]
+    },
+
+    {
+      "id": "post-tv-no-signal",
+      "phase": "post_purchase",
+      "category": "tv",
+      "title": "TV shows 'No signal' on HDMI",
+      "user_utterances": [
+        "The TV says 'no signal' when I turn on the console",
+        "Black screen on HDMI"
+      ],
+      "must_ask_if_missing": [
+        "Which TV model is it (ID/model), and which HDMI port is the console connected to?",
+        "Have you tried a different HDMI cable or port?"
+      ],
+      "success_criteria": [
+        "Does not invent device-specific troubleshooting if it is not in the catalog",
+        "Asks for the minimum details and only provides generic steps if allowed by the policy"
+      ]
+    },
+    {
+      "id": "post-tv-audio-delay",
+      "phase": "post_purchase",
+      "category": "tv",
+      "title": "Audio delay with a soundbar (lip sync)",
+      "user_utterances": [
+        "I have audio delay with my soundbar",
+        "The audio is not synced with the video"
+      ],
+      "must_ask_if_missing": [
+        "Are you using HDMI eARC or an optical cable?",
+        "Which soundbar and TV models are you using?"
+      ],
+      "success_criteria": [
+        "Asks the connection type and models before suggesting a specific solution"
+      ]
+    },
+    {
+      "id": "post-phone-wont-charge",
+      "phase": "post_purchase",
+      "category": "smartphone",
+      "title": "Phone won’t charge / charges slowly",
+      "user_utterances": [
+        "My phone won’t charge",
+        "It charges very slowly even with a fast charger"
+      ],
+      "must_ask_if_missing": [
+        "Which model (e.g. PulsePhone X1 or X1 Ultra) and which charger/cable are you using?",
+        "Do you see any on-screen message (moisture, temperature, accessory not supported)?"
+      ],
+      "success_criteria": [
+        "Does not invent charging capabilities beyond what’s in the context (e.g. 45W, 80W)",
+        "Asks about accessories and symptoms before concluding"
+      ]
+    },
+    {
+      "id": "post-phone-water-damage",
+      "phase": "post_purchase",
+      "category": "smartphone",
+      "title": "Phone got wet (IP rating misunderstanding)",
+      "user_utterances": [
+        "It’s IP68 but it fell in water and now it doesn’t work",
+        "After the pool it won’t turn on"
+      ],
+      "must_ask_if_missing": [
+        "Was it fresh water or salt water? How long was it submerged?",
+        "Have you already dried it and left it powered off for a while?"
+      ],
+      "success_criteria": [
+        "Recognizes IP rating does not guarantee damage coverage and does not promise free service unless it’s in the catalog"
+      ]
+    },
+    {
+      "id": "post-laptop-overheating-fans",
+      "phase": "post_purchase",
+      "category": "laptop",
+      "title": "Laptop runs hot / loud fans",
+      "user_utterances": [
+        "My laptop gets very hot and the fans are very loud",
+        "When gaming, the ForgeNote 15 becomes extremely hot"
+      ],
+      "must_ask_if_missing": [
+        "Does it happen only under load (games/rendering) or also when idle?",
+        "Is it placed on a surface that blocks the air vents?"
+      ],
+      "success_criteria": [
+        "Asks for usage context and does not invent BIOS/profiles not present in the catalog"
+      ]
+    },
+    {
+      "id": "post-earbuds-pairing",
+      "phase": "post_purchase",
+      "category": "audio",
+      "title": "Earbuds won’t pair via Bluetooth",
+      "user_utterances": [
+        "My earbuds won’t connect to my phone",
+        "I can’t see the WavePods in the Bluetooth device list"
+      ],
+      "must_ask_if_missing": [
+        "Which phone are you using, and have you paired the earbuds to other devices before?",
+        "Do the earbuds enter pairing mode?"
+      ],
+      "success_criteria": [
+        "Before giving specific instructions, collects the minimum required details"
+      ]
+    },
+    {
+      "id": "post-wearable-sync",
+      "phase": "post_purchase",
+      "category": "wearable",
+      "title": "Smartwatch won’t sync notifications",
+      "user_utterances": [
+        "My smartwatch doesn’t show notifications",
+        "It won’t sync with the app"
+      ],
+      "must_ask_if_missing": [
+        "Are you using Android or iOS? Does the app have notification permissions and Bluetooth enabled?",
+        "Is the device connected via Bluetooth?"
+      ],
+      "success_criteria": [
+        "Asks about OS and permissions before concluding"
+      ]
+    },
+    {
+      "id": "post-fridge-noise",
+      "phase": "post_purchase",
+      "category": "appliance",
+      "title": "Fridge is noisy / vibrating",
+      "user_utterances": [
+        "My fridge makes a strange noise",
+        "It vibrates and I hear a humming sound"
+      ],
+      "must_ask_if_missing": [
+        "Which model is it (e.g. FrostLine Combi 300L) and how long has it been installed?",
+        "Is the noise continuous or intermittent?"
+      ],
+      "success_criteria": [
+        "Does not invent specific technical causes if not in the catalog; guides the user to gather details"
+      ]
+    }
+  ]
+}

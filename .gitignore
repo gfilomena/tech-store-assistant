@@ -1,0 +1,14 @@
+node_modules
+.next
+dist
+.env
+data/catalog.sqlite
+data/catalog.sqlite-*
+
+# OS / editor
+.DS_Store
+.cursor/
+
+# Playwright
+test-results/
+playwright-report/

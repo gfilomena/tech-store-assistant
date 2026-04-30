@@ -1,0 +1,46 @@
+{
+  "name": "tech-store-assistant",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "free:3000": "kill-port 3000",
+    "free:4001": "kill-port 4001",
+    "dev": "next dev",
+    "dev:clean": "npm run free:3000 && next dev",
+    "dev:catalog-api": "npm run dev --prefix services/catalog-api",
+    "build": "next build",
+    "start": "next start",
+    "dev:chat": "tsx examples/chat.ts",
+    "dev:responses": "tsx examples/responses.ts",
+    "dev:rag": "tsx examples/rag-store.ts",
+    "dev:rag:chat": "tsx examples/rag-chat.ts",
+    "eval:rag": "tsx evals/rag/run.ts",
+    "demo:rag": "tsx evals/rag/run.ts evals/rag/cases/demo.jsonl",
+    "e2e": "E2E_MOCK_CHAT=1 NEXT_PUBLIC_E2E_SKIP_WARMUP=1 E2E_USE_SYSTEM_CHROME=1 playwright test",
+    "e2e:ui": "E2E_MOCK_CHAT=1 NEXT_PUBLIC_E2E_SKIP_WARMUP=1 E2E_USE_SYSTEM_CHROME=1 playwright test --headed",
+    "e2e:live": "E2E_RUN_LIVE=1 E2E_MOCK_CHAT=0 E2E_SKIP_WARMUP=0 playwright test -g live",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "next": "^16.2.4",
+    "openai": "^6.34.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "kill-port": "^2.0.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

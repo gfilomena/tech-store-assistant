@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 640" width="920" height="640" role="img" aria-labelledby="title desc">
+  <title id="title">Tech store assistant — high-level architecture</title>
+  <desc id="desc">Flow from user browser through web app, answer intelligence, optional product service, and persistence.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1424"/>
+      <stop offset="100%" style="stop-color:#1a1030"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c5cff"/>
+      <stop offset="100%" style="stop-color:#00d4ff"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <polygon points="0 0, 9 4.5, 0 9" fill="#00d4ff"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <circle cx="140" cy="120" r="120" fill="#7c5cff" opacity="0.12"/>
+  <circle cx="820" cy="180" r="100" fill="#00d4ff" opacity="0.1"/>
+  <circle cx="480" cy="560" r="140" fill="#7c5cff" opacity="0.08"/>
+
+  <text x="460" y="52" text-anchor="middle" fill="#f0f2ff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="0.02em">Tech store assistant</text>
+  <text x="460" y="82" text-anchor="middle" fill="#a8b0d4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">High-level architecture</text>
+
+  <g filter="url(#cardShadow)">
+    <rect x="310" y="108" width="300" height="64" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+    <text x="460" y="138" text-anchor="middle" fill="#e8ecff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="600">Visitor · browser</text>
+    <text x="460" y="158" text-anchor="middle" fill="#8b95b8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Chat &amp; optional voice</text>
+  </g>
+  <line x1="460" y1="172" x2="460" y2="198" stroke="url(#accent)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrowhead)"/>
+
+  <g filter="url(#cardShadow)">
+    <rect x="120" y="200" width="680" height="120" rx="20" fill="rgba(124,92,255,0.12)" stroke="rgba(124,92,255,0.35)" stroke-width="1"/>
+    <text x="460" y="232" text-anchor="middle" fill="#c4cfff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="700">Web application (server + UI)</text>
+    <text x="240" y="268" text-anchor="start" fill="#9aa6d4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• Chat with streaming replies</text>
+    <text x="240" y="292" text-anchor="start" fill="#9aa6d4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• Optional: voice transcription, product API proxy</text>
+    <text x="240" y="316" text-anchor="start" fill="#9aa6d4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• Secrets stay on the server — not in the browser</text>
+  </g>
+  <path d="M300 320 L270 368" stroke="rgba(0,212,255,0.45)" stroke-width="1.8" fill="none"/>
+  <path d="M620 320 L660 368" stroke="rgba(124,92,255,0.4)" stroke-width="1.8" fill="none"/>
+  <line x1="460" y1="320" x2="460" y2="368" stroke="url(#accent)" stroke-width="2" stroke-linecap="round"/>
+
+  <g filter="url(#cardShadow)">
+    <rect x="80" y="368" width="380" height="200" rx="18" fill="rgba(0,212,255,0.08)" stroke="rgba(0,212,255,0.28)" stroke-width="1"/>
+    <text x="270" y="404" text-anchor="middle" fill="#b8f0ff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Answer intelligence</text>
+    <text x="100" y="436" text-anchor="start" fill="#8ecae6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• Search by meaning over catalog text</text>
+    <text x="100" y="460" text-anchor="start" fill="#8ecae6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• Replies grounded in retrieved snippets</text>
+    <text x="100" y="484" text-anchor="start" fill="#8ecae6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• External AI for language + optional audio</text>
+    <text x="100" y="516" text-anchor="start" fill="#6b7a8f" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">Question ? similar passages ? safe prompt ? answer</text>
+    <text x="100" y="538" text-anchor="start" fill="#6b7a8f" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">Store-wide facts (e.g. totals) supplied explicitly when relevant</text>
+  </g>
+  <g filter="url(#cardShadow)">
+    <rect x="480" y="368" width="360" height="200" rx="18" fill="rgba(124,92,255,0.1)" stroke="rgba(124,92,255,0.3)" stroke-width="1"/>
+    <text x="660" y="404" text-anchor="middle" fill="#dcd6ff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Product service (optional)</text>
+    <text x="500" y="436" text-anchor="start" fill="#b4a9e0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• HTTP API for listings &amp; product details</text>
+    <text x="500" y="460" text-anchor="start" fill="#b4a9e0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• Dedicated store for product rows</text>
+    <text x="500" y="484" text-anchor="start" fill="#b4a9e0" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">• Can run as its own deployable unit</text>
+    <text x="500" y="516" text-anchor="start" fill="#7d7399" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">Web tier may proxy so clients never see upstream credentials</text>
+    <text x="500" y="538" text-anchor="start" fill="#7d7399" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">Search/chat indexing uses the catalog source you configure — not necessarily each HTTP call</text>
+  </g>
+
+  <g filter="url(#cardShadow)">
+    <rect x="140" y="592" width="640" height="36" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+    <text x="460" y="615" text-anchor="middle" fill="#7a849e" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Underneath · catalog source · optional embedding cache · product database · environment configuration</text>
+  </g>
+</svg>
