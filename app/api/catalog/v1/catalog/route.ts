@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
-import { fetchCatalogDocument } from "../../../../../src/integrations/catalogApiClient";
 
 export const runtime = "nodejs";
 
 export async function GET() {
   try {
+    const { fetchCatalogDocument } = await import(
+      "../../../../../src/integrations/catalogApiClient"
+    );
     const catalog = await fetchCatalogDocument();
     return NextResponse.json(catalog);
   } catch (e) {

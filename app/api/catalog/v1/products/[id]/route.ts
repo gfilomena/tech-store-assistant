@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { fetchCatalogProduct } from "../../../../../../src/integrations/catalogApiClient";
 
 export const runtime = "nodejs";
 
@@ -7,6 +6,9 @@ type RouteContext = { params: Promise<{ id: string }> };
 
 export async function GET(_req: Request, ctx: RouteContext) {
   try {
+    const { fetchCatalogProduct } = await import(
+      "../../../../../../src/integrations/catalogApiClient"
+    );
     const { id } = await ctx.params;
     const data = await fetchCatalogProduct(decodeURIComponent(id));
     if (!data) return NextResponse.json({ error: "Not found" }, { status: 404 });
