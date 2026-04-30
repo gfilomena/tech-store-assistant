@@ -29,7 +29,7 @@ let initialized = false;
 
 /** Vercel serverless cannot load `better-sqlite3` reliably; use in-memory catalog from JSON. */
 function useMemoryCatalog(): boolean {
-  return Boolean(process.env.VERCEL);
+  return Boolean(process.env.VERCEL) || Boolean(process.env.VERCEL_ENV);
 }
 
 /**

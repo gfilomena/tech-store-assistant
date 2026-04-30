@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { handle } from "hono/vercel";
 import { cors } from "hono/cors";
 import {
   getProductById,
@@ -30,7 +31,7 @@ try {
 function httpRoutePrefix(): string {
   const explicit = process.env.CATALOG_HTTP_ROUTE_PREFIX?.trim();
   if (explicit) return explicit.replace(/\/$/, "");
-  if (process.env.VERCEL) return "/_/catalog-api";
+  if (process.env.VERCEL || process.env.VERCEL_ENV) return "/_/catalog-api";
   return "";
 }
 
@@ -113,12 +114,17 @@ app.get("/v1/products/:id", async (c) => {
   return c.json({ product });
 });
 
+/** Vercel runs this file as a Serverless Function: must export a fetch handler, not `listen()`. */
+export default handle(app);
+
 const port = Number.parseInt(process.env.PORT || "4001", 10);
 const host = process.env.HOST?.trim() || "0.0.0.0";
 
-serve({ fetch: app.fetch, port, hostname: host }, (info) => {
-  const mount = routePrefix || "/";
-  console.log(
-    `catalog-api listening on http://${info.address}:${info.port} (mount ${mount})`,
-  );
-});
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+  serve({ fetch: app.fetch, port, hostname: host }, (info) => {
+    const mount = routePrefix || "/";
+    console.log(
+      `catalog-api listening on http://${info.address}:${info.port} (mount ${mount})`,
+    );
+  });
+}

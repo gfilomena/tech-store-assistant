@@ -19,7 +19,7 @@ function defaultDbPath(): string {
   if (rel) return join(process.cwd(), rel);
 
   // Vercel runtime filesystem is read-only except for /tmp.
-  if (process.env.VERCEL) return join("/", "tmp", "catalog.sqlite");
+  if (process.env.VERCEL || process.env.VERCEL_ENV) return join("/", "tmp", "catalog.sqlite");
 
   return join(process.cwd(), "..", "..", "data", "catalog.sqlite");
 }
