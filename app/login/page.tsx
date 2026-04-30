@@ -21,6 +21,7 @@ export default async function LoginPage({
           borderRadius: 12,
           padding: 20,
           background: "white",
+          color: "#0f172a",
         }}
       >
         <h1 style={{ marginTop: 0, marginBottom: 16, fontSize: 20 }}>Sign in</h1>
@@ -44,34 +45,44 @@ export default async function LoginPage({
         <input type="hidden" name="next" value={next} />
 
         <label style={{ display: "block", marginBottom: 12 }}>
-          <div style={{ fontSize: 13, marginBottom: 6, opacity: 0.85 }}>Username</div>
+          <div style={{ fontSize: 13, marginBottom: 6, color: "rgba(15, 23, 42, 0.82)" }}>
+            Username
+          </div>
           <input
             name="username"
             autoComplete="username"
             required
+            placeholder="admin"
             style={{
               width: "100%",
               height: 40,
               borderRadius: 8,
               border: "1px solid rgba(0,0,0,0.18)",
               padding: "0 12px",
+              background: "white",
+              color: "#0f172a",
             }}
           />
         </label>
 
         <label style={{ display: "block", marginBottom: 16 }}>
-          <div style={{ fontSize: 13, marginBottom: 6, opacity: 0.85 }}>Password</div>
+          <div style={{ fontSize: 13, marginBottom: 6, color: "rgba(15, 23, 42, 0.82)" }}>
+            Password
+          </div>
           <input
             type="password"
             name="password"
             autoComplete="current-password"
             required
+            placeholder="••••••••"
             style={{
               width: "100%",
               height: 40,
               borderRadius: 8,
               border: "1px solid rgba(0,0,0,0.18)",
               padding: "0 12px",
+              background: "white",
+              color: "#0f172a",
             }}
           />
         </label>
