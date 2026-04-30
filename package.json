@@ -1,7 +1,6 @@
 {
   "name": "tech-store-assistant",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "free:3000": "kill-port 3000",
     "free:4001": "kill-port 4001",
