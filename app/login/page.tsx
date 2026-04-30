@@ -11,6 +11,18 @@ export default async function LoginPage({
 
   return (
     <main style={{ minHeight: "100vh", display: "grid", placeItems: "center", padding: 24 }}>
+      <div style={{ width: "100%", maxWidth: 420 }}>
+        <div
+          style={{
+            fontWeight: 800,
+            letterSpacing: "0.02em",
+            fontSize: 18,
+            marginBottom: 10,
+            color: "var(--text)",
+          }}
+        >
+          Tech Store Assistant
+        </div>
       <form
         action="/api/auth/login"
         method="post"
@@ -103,6 +115,7 @@ export default async function LoginPage({
           Sign in
         </button>
       </form>
+      </div>
     </main>
   );
 }
