@@ -1,0 +1,13 @@
+{
+  "experimentalServices": {
+    "frontend": {
+      "routePrefix": "/",
+      "framework": "nextjs"
+    },
+    "catalog-api": {
+      "entrypoint": "services/catalog-api",
+      "routePrefix": "/_/catalog-api"
+    }
+  }
+}
+
