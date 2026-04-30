@@ -9,6 +9,10 @@ let db: CatalogSqliteDb | null = null;
 function defaultDbPath(): string {
   const rel = process.env.CATALOG_DB_PATH?.trim();
   if (rel) return join(process.cwd(), rel);
+
+  // Vercel runtime filesystem is read-only except for /tmp.
+  if (process.env.VERCEL) return join("/", "tmp", "catalog.sqlite");
+
   return join(process.cwd(), "..", "..", "data", "catalog.sqlite");
 }
 
