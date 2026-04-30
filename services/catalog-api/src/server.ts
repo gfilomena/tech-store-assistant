@@ -1,7 +1,6 @@
 import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { handle } from "hono/vercel";
 import { cors } from "hono/cors";
 import {
   getProductById,
@@ -114,8 +113,11 @@ app.get("/v1/products/:id", async (c) => {
   return c.json({ product });
 });
 
-/** Vercel runs this file as a Serverless Function: must export a fetch handler, not `listen()`. */
-export default handle(app);
+/**
+ * Vercel’s Hono framework expects the Hono app as the default export.
+ * (The `handle()` adapter is primarily for Next.js route handlers.)
+ */
+export default app;
 
 const port = Number.parseInt(process.env.PORT || "4001", 10);
 const host = process.env.HOST?.trim() || "0.0.0.0";
