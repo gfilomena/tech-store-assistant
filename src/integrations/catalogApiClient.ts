@@ -24,17 +24,36 @@ export type CatalogCategoriesResponse = {
 };
 
 function baseUrl(): string {
-  const u = process.env.CATALOG_API_BASE_URL?.trim();
+  const raw = process.env.CATALOG_API_BASE_URL?.trim();
+  let u = raw;
+
+  if (!u && process.env.VERCEL && process.env.VERCEL_URL) {
+    u = `https://${process.env.VERCEL_URL}/_/catalog-api`;
+  }
+
   if (!u) {
     throw new Error(
       "Missing CATALOG_API_BASE_URL. Set it to the catalog-api origin, e.g. http://127.0.0.1:4001",
     );
   }
+
+  if (u.startsWith("/")) {
+    const host = process.env.VERCEL_URL;
+    if (!host) {
+      throw new Error(
+        "CATALOG_API_BASE_URL is a path-only URL; set VERCEL_URL (Vercel) or use an absolute URL like http://127.0.0.1:4001",
+      );
+    }
+    u = `https://${host}${u}`;
+  }
+
   return u.replace(/\/$/, "");
 }
 
 function hasRemoteCatalogApi(): boolean {
-  return Boolean(process.env.CATALOG_API_BASE_URL?.trim());
+  if (process.env.CATALOG_API_BASE_URL?.trim()) return true;
+  if (process.env.VERCEL && process.env.VERCEL_URL) return true;
+  return false;
 }
 
 function authHeaders(): HeadersInit {
