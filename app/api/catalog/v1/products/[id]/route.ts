@@ -13,7 +13,7 @@ export async function GET(_req: Request, ctx: RouteContext) {
     return NextResponse.json(data);
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    const status = message.includes("Missing CATALOG_API_BASE_URL") ? 503 : 500;
+    const status = message.includes("Missing catalog API URL") ? 503 : 500;
     return NextResponse.json({ error: message }, { status });
   }
 }

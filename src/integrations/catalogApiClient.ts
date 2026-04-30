@@ -24,16 +24,20 @@ export type CatalogCategoriesResponse = {
 };
 
 function baseUrl(): string {
-  const raw = process.env.CATALOG_API_BASE_URL?.trim();
-  let u = raw;
+  let raw =
+    process.env.CATALOG_API_BASE_URL?.trim() ||
+    process.env.CATALOG_API_URL?.trim() ||
+    "";
 
-  if (!u && process.env.VERCEL && process.env.VERCEL_URL) {
-    u = `https://${process.env.VERCEL_URL}/_/catalog-api`;
+  if (!raw && process.env.VERCEL && process.env.VERCEL_URL) {
+    raw = `https://${process.env.VERCEL_URL}/_/catalog-api`;
   }
+
+  let u = raw;
 
   if (!u) {
     throw new Error(
-      "Missing CATALOG_API_BASE_URL. Set it to the catalog-api origin, e.g. http://127.0.0.1:4001",
+      "Missing catalog API URL. Set CATALOG_API_BASE_URL (e.g. http://127.0.0.1:4001) or rely on Vercel CATALOG_API_URL / VERCEL_URL.",
     );
   }
 
@@ -52,6 +56,7 @@ function baseUrl(): string {
 
 function hasRemoteCatalogApi(): boolean {
   if (process.env.CATALOG_API_BASE_URL?.trim()) return true;
+  if (process.env.CATALOG_API_URL?.trim()) return true;
   if (process.env.VERCEL && process.env.VERCEL_URL) return true;
   return false;
 }

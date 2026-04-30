@@ -27,7 +27,19 @@ try {
   );
 }
 
-const app = new Hono();
+/**
+ * On Vercel multi-service routing, requests keep the service `routePrefix` in the URL path.
+ * Locally the service is mounted at `/` on its own port.
+ */
+function httpRoutePrefix(): string {
+  const explicit = process.env.CATALOG_HTTP_ROUTE_PREFIX?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+  if (process.env.VERCEL) return "/_/catalog-api";
+  return "";
+}
+
+const routePrefix = httpRoutePrefix();
+const app = routePrefix ? new Hono().basePath(routePrefix) : new Hono();
 
 const allowOrigin = process.env.CATALOG_CORS_ORIGIN?.trim() || "*";
 
@@ -109,5 +121,8 @@ const port = Number.parseInt(process.env.PORT || "4001", 10);
 const host = process.env.HOST?.trim() || "0.0.0.0";
 
 serve({ fetch: app.fetch, port, hostname: host }, (info) => {
-  console.log(`catalog-api listening on http://${info.address}:${info.port}`);
+  const mount = routePrefix || "/";
+  console.log(
+    `catalog-api listening on http://${info.address}:${info.port} (mount ${mount})`,
+  );
 });
